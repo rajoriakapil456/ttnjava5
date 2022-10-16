@@ -1,23 +1,46 @@
-sealed class Base permits Child1, Child2 {
+import java.util.*;
 
+abstract sealed class Person permits Employee, Manager {
+   String name;
+   String getName() {
+      return name;
+   }
+}
+final class Employee extends Person {
+   String name;
+   int id;
+   Employee(int id, String name){
+      this.id = id;
+      this.name = name;
+   }
+   int getEmployeeId() {
+      return id;
+   }
+}
+non-sealed class Manager extends Person {
+   int id;
+   Manager(int id, String name){
+      this.id = id;
+      this.name = name;
+   }
+   int getManagerId() {
+      return id;
+   }
 }
 
-final class Child1 extends Base {
-
-}
-
-sealed class Child2 extends Base permits Child3 {
-
-}
-
-non-sealed class Child3 extends Child2 {
-
-};
-
-public class Question_12 
-{
-    public static void main(String[] args) 
-    {
-
-    }
+class Question_12 {
+   public static void main(String[] args) {
+      Person manager = new Manager(23, "Kapil");
+      manager.name = "Kapil";
+      System.out.println(getId(manager));
+   }
+   public static int getId(Person person) {
+      if (person instanceof Employee) {
+         return ((Employee) person).getEmployeeId();
+      } 
+      else if (person instanceof Manager) {
+         return ((Manager) person).getManagerId();
+      }
+      return -1;
+   }
 }
